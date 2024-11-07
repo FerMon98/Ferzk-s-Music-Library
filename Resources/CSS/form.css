@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 2em;
+    background-image: linear-gradient(45deg, red, blue);
+    color: white;
+    line-height: 4rem;
+}
+
+header {
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    margin: 2rem auto;
+    padding: 0 2rem;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+        justify-content: center;
+        align-items: center;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+
+            label {
+                padding: 0 2rem;
+                text-align: left;
+            }
+    
+            input, textarea {
+                height: auto;
+                padding: 0.5rem;
+                border-radius: 15px;
+            }
+        }
+
+        button {
+            margin: 2rem 0;
+            padding: 0.5rem;
+            background-color: darkblue;
+            color: white;
+            border: 2px solid silver;
+            font-size: 1.2rem;
+            border-radius: 15px;
+            transition: background-image 2s ease-in;
+
+            &:hover {
+                background-color: lightgray;
+                color: black;
+                cursor: pointer;
+                font-size: 1.5rem;
+                background-image: linear-gradient(45deg, white, black);
+            }
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s ease;
+        border: 2px solid white;
+        border-radius: 10px;
+        padding: 0.5rem;
+        transition: 0.3s ease-in;
+
+        &:hover {
+            color: lightblue;
+            background-color: black;
+        }
+
+        &:visited {
+            color: gray;
+            background-color: lightgray;
+        }
+    }
+}
