@@ -1,3 +1,16 @@
+<?php 
+
+error_reporting(0);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$API_KEY = "b8ea511d6c5a44fc9fcd25d1a87f9f80";
+$URL = "https://api.spotify.com/"
+
+?>
+
+<!-- *********************************************************************** -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +29,12 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="Webpages/musicplayer.html">Playlists</a></li>
-                <li><a href="Webpages/lyricsweb.html">Lyrics</a></li>
-                <li><a href="Webpages/formadd-remove.html">Song Requests</a></li>
-                <li><a href="Webpages/donations.html">Donate</a></li>
-                <li><a href="Webpages/userchat.html">Forum</a></li>
-                <li><a href="Webpages/contact.html">Contact</a></li>
+                <li><a href="./Public/Webpages/musicplayer.php">Playlists</a></li>
+                <li><a href="./Public/Webpages/formadd-remove.html">Song Requests</a></li>
+                <li><a href="./Public/Webpages/contact.html">Contact</a></li>
+                <li><a href="./Public/Webpages/userchat.html">Forum</a></li>
+                <li><a href="./Public/Webpages/lyricsweb.html">Lyrics</a></li>
+                <li><a href="./Public/Webpages/donations.html">Donate</a></li>
             </ul>
         </nav>
     </header>
@@ -32,6 +45,19 @@
              <p>This is a simple website for a music library. You can find all the music you love here. Just click on the song you want to listen to and enjoy the ride</p>  
         </section>
 
+        <div>
+            <h2>Popular Songs</h2>
+            <div id="popular-songs">
+                <!-- Song cards will be dynamically generated here -->
+                 <!-- Example:
+                 <div class="song-card">
+                     <img src="Resources/Images/music/song1.jpg" alt="Song 1">
+                     <h3>Song 1</h3>
+                     <p>Artist: Artist 1</p>
+                 </div>
+                 -->
+            </div>
+        </div>
         <!--<audio controls></audio>
             <source src="Resources/Music/ytmp3free.cc_the-killers-somebody-told-me-official-music-video-youtubemp3free.org.mp3" type="audio/mpeg">
         </audio> -->
