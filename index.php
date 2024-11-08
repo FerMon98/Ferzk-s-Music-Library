@@ -4,7 +4,7 @@ error_reporting(0);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$API_KEY = "b8ea511d6c5a44fc9fcd25d1a87f9f80";
+$API_KEY = "b89f80";
 $URL = "https://api.spotify.com/"
 
 ?>
