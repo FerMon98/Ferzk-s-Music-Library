@@ -1,9 +1,9 @@
 <?php
 session_start();
-
 require '../../vendor/autoload.php';
 
 use SpotifyWebAPI\SpotifyWebAPI;
+use SpotifyWebAPI\Session;
 
 // Check if the user is authenticated 
 if (!isset($_SESSION['accessToken'])) {
@@ -14,17 +14,33 @@ if (!isset($_SESSION['accessToken'])) {
 $accessToken = $_SESSION['accessToken'];
 $refreshToken = $_SESSION['refreshToken'];
 
-$api = new SpotifyWebAPI();
-$api->setAccessToken($accessToken);
+// Check if the access token has expired and refresh it if necessary
+if ($accessToken && isset($refreshToken)) {
+    // Set the Spotify API instance
+    $api = new SpotifyWebAPI();
+    $api->setAccessToken($accessToken);
 
-// Now you can make API requests 
-try { 
-    $me = $api->me(); 
-    echo 'Hello, ' . $me->display_name; 
-} catch (Exception $e) { 
-    // Handle token expiration or other errors 
-    // Redirect to login or refresh token as needed 
-    echo 'An error occurred: ' . $e->getMessage(); 
+    try {
+        // Make a test request to see if the token is still valid
+        $me = $api->me();
+    } catch (Exception $e) {
+        // If the token is expired, attempt to refresh it
+        $session = new Session(
+            $_ENV['CLIENT_ID'],
+            $_ENV['CLIENT_SECRET'],
+            'http://localhost/ferzk-music/Public/Webpages/musicplayer.php'
+        );
+        $session->requestAccessToken($refreshToken);
+        $_SESSION['accessToken'] = $session->getAccessToken();
+        $_SESSION['refreshToken'] = $session->getRefreshToken();
+        
+        // Now try the API call again
+        $api->setAccessToken($_SESSION['accessToken']);
+        $me = $api->me();
+    }
+
+    // Show the user's name
+    echo 'Hello, ' . $me->display_name;
 }
 ?>
 
@@ -46,6 +62,8 @@ try {
     <header>
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Search for a song...">
+            <button onclick="playSong()">Play</button>
+        </div>
     </header>
     <main>
 
