@@ -1,11 +1,22 @@
 <?php 
-
 error_reporting(0);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$API_KEY = "b89f80";
-$URL = "https://api.spotify.com/"
+require 'vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+//access the environment variables
+$dbAPI = getenv('DB_API_KEY');
+
+
+$URL = "https://api.spotify.com/";
+
+echo $dbAPI
 
 ?>
 
