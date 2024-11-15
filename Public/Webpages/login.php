@@ -23,8 +23,8 @@ try {
 // Replace with your own Spotify Client ID and Secret
 $clientId = $_ENV['CLIENT_ID'];
 $clientSecret = $_ENV['CLIENT_SECRET'];
-// $clientId = 'b8ea511d6c5a44fc9fcd25d1a87f9f80';
-// $clientSecret = '4d4615b9f3ae45b39ce07ea425ddb984';
+// $clientId = '66';
+// $clientSecret = '666';
 echo "CLIENT_SECRET: " . $_ENV['CLIENT_SECRET'] . "<br>";
 echo "CLIENT_ID: " . getenv('CLIENT_ID') . "<br>";
 
