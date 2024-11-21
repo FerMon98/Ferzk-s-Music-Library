@@ -2,16 +2,10 @@
 error_reporting(0);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+include 'php_setup_files/connection.php';
 
-
-
-//access the environment variables
-$dbAPI = getenv('DB_API_KEY');
-
-
-$URL = "https://api.spotify.com/";
-
-echo $dbAPI
+$sql = "SELECT title, artist, album, album_cover, genre, duration, lyrics, link FROM songs";
+$result = $conn->query($sql);
 
 ?>
 
@@ -26,8 +20,8 @@ echo $dbAPI
     <meta name="description" content="Ferzk's Music Library">
     <meta name="keywords" content="music library, music player, lyrics, music, Ferzk">
     <title>Ferzk's Library</title>
-    <link rel="stylesheet" href="Resources/CSS/style.css">
-    <link rel="shortcut icon" href="Resources/Images/favicon/icons8-music.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./Resources/CSS/style.css">
+    <link rel="shortcut icon" href="./Resources/Images/favicon/icons8-music.svg" type="image/x-icon">
 </head>
 <body>
     <header>
@@ -35,12 +29,12 @@ echo $dbAPI
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="./Public/Webpages/musicplayer.php">Playlists</a></li>
-                <li><a href="./Public/Webpages/formadd-remove.html">Song Requests</a></li>
-                <li><a href="./Public/Webpages/contact.html">Contact</a></li>
-                <li><a href="./Public/Webpages/userchat.html">Forum</a></li>
-                <li><a href="./Public/Webpages/lyricsweb.html">Lyrics</a></li>
-                <li><a href="./Public/Webpages/donations.html">Donate</a></li>
+                <li><a href="./Webpages/musicplayer.php">Playlists</a></li>
+                <li><a href="./Webpages/formadd-remove.php">Song Requests</a></li>
+                <li><a href="./Webpages/contact.html">Contact</a></li>
+                <li><a href="./Webpages/userchat.html">Forum</a></li>
+                <li><a href="./Webpages/lyricsweb.html">Lyrics</a></li>
+                <li><a href="./Webpages/donations.html">Donate</a></li>
             </ul>
         </nav>
     </header>
@@ -51,19 +45,46 @@ echo $dbAPI
              <p>This is a simple website for a music library. You can find all the music you love here. Just click on the song you want to listen to and enjoy the ride</p>  
         </section>
 
-        <div>
-            <h2>Popular Songs</h2>
+        <section>
             <div id="popular-songs">
+                <h2>Popular Songs</h2>
                 <!-- Song cards will be dynamically generated here -->
-                 <!-- Example:
-                 <div class="song-card">
-                     <img src="Resources/Images/music/song1.jpg" alt="Song 1">
-                     <h3>Song 1</h3>
-                     <p>Artist: Artist 1</p>
-                 </div>
-                 -->
+                <div>
+                    <?php
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<div class="song-card">';
+                                    echo '<img src="' . $row['album_cover'] . '" alt="Cover photo of ' . $row['title'] . '" class="song-cover">';
+                                    echo '<h5>' . htmlspecialchars($row['title']) . '</h5>';
+                            
+                                    // Display artist if it's not null
+                                    if (!empty($row['artist'])) {
+                                        echo '<p><strong>Artist:</strong> ' . htmlspecialchars($row['artist']) . '</p>';
+                                    }
+                            
+                                    // Display album if it's not null
+                                    if (!empty($row['album'])) {
+                                        echo '<p><strong>Album:</strong> ' . htmlspecialchars($row['album']) . '</p>';
+                                    }
+                            
+                                    // Display duration if it's not null
+                                    if (!empty($row['duration'])) {
+                                        echo '<strong><p>Duration:</strong> ' . htmlspecialchars($row['duration']) . '</p>';
+                                    }
+                            
+                                    echo '<p><strong>Genre:</strong> ' . htmlspecialchars($row['genre']) . '</p>';
+                                    echo '<a href="' . htmlspecialchars($row['link']) . '" target="_blank">Listen in Youtube</a>';
+                                echo '</div>';
+                            }
+                        } else {
+                            echo '<p>No songs found.</p>';
+                        }
+
+                        $conn->close();
+                    ?>
+                </div>
             </div>
-        </div>
+        </section>
         <!--<audio controls></audio>
             <source src="Resources/Music/ytmp3free.cc_the-killers-somebody-told-me-official-music-video-youtubemp3free.org.mp3" type="audio/mpeg">
         </audio> -->
