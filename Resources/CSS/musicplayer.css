@@ -32,12 +32,25 @@ header {
     }
 }
 
-#eightys {
+#made_playlists {
     margin: 2rem 2rem;
     padding: 2rem;
     border: 2px solid white;
     border-radius: 10px;
+    display: flex;
+    background-color: rgba(242, 231, 232, 0.547);
+
+    .playlist {
+        margin: 1rem 1rem;
+        padding: 1rem;
+        border: 2px solid white;
+        border-radius: 10px;
+        width: 35%;
+        font-size: 1.2rem;
+    }
 }
+
+
 
 ul {
     li {
@@ -54,7 +67,7 @@ ul {
         }
 
         a{
-            color: skyblue;
+            color: rgb(5, 47, 64);
             text-decoration: none;
             margin-top: 1rem;
             font-size: smaller;
@@ -67,7 +80,7 @@ ul {
                 transition: 0.3s ease-in;
                 border-radius: 10px;
                 padding: 0.5rem;
-                font-size: 1.2rem;
+                font-size: 0.8rem;
             }
         }
 
