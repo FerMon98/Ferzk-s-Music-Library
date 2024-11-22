@@ -41,8 +41,7 @@ $result = $conn->query($sql);
     
     <main>
         <section id="banner">
-            
-             <p>This is a simple website for a music library. You can find all the music you love here. Just click on the song you want to listen to and enjoy the ride</p>  
+             <p style="padding: 2rem 4rem;">This is a simple website for a music library. <br> You can find all the music you love here. Just click on the song you want to listen to and enjoy the ride</p>  
         </section>
 
         <section>

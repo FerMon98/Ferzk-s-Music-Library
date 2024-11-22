@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+ob_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -12,7 +12,11 @@ $songs = [];
 while ($row = $result->fetch_assoc()) {
     $songs[] = $row;
 }
+ob_end_flush();
 ?>
+
+
+<!-- *********************************************************************** -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,31 +29,19 @@ while ($row = $result->fetch_assoc()) {
     <title>Music Player</title>
     <link rel="stylesheet" href="../Resources/CSS/musicplayer.css">
     <link rel="shortcut icon" href="../Resources/Images/favicon/icons8-music.svg" type="image/x-icon">
+    <script src="../Resources/javascript/playmusic.js" defer></script>
+    <script>
+        // Passing the PHP genres array to JavaScript
+        var genres = <?php echo json_encode($genres); ?>;
+        console.log("Genres array from PHP:", genres);  // This will help you debug
+    </script>
 
     <script>
-        function togglePlay(audioId) {
-            const audioElement = document.getElementById(audioId);
-
-            if (!audioElement) {
-                console.error(`Audio element with ID '${audioId}' not found.`);
-                return;
-            }
-
-            if (audioElement.paused) {
-                // Pause any other playing audio before playing the new one
-                const allAudios = document.querySelectorAll("audio");
-                allAudios.forEach(audio => {
-                    if (!audio.paused) {
-                        audio.pause();
-                    }
-                });
-
-                audioElement.play();
-            } else {
-                audioElement.pause();
-            }
-        }
+        var songs = <?php echo json_encode($songs); ?>;
+        console.log("Songs array from PHP:", songs);  // Log it to check
     </script>
+
+
 </head>
 <body>
     <header>
@@ -60,90 +52,75 @@ while ($row = $result->fetch_assoc()) {
     <main>
         <h2>You can listen from our collection or create your own Playlists 😎</h2>
 
-        <section id="made_playlists">
-            <div class="playlist">
-                <h1>80's Songs</h1>
-                <ul>
-                    <?php
-                    foreach ($songs as $row) {
-                        if (strpos($row['genre'], '80') !== false) {
-                            echo '<li>';
-                            echo '<img src="' . htmlspecialchars($row['album_cover']) . '" alt="' . htmlspecialchars($row['album']) . '">';
-                            if (!empty($row['artist'])) {
-                                echo '<a href="' . htmlspecialchars($row['link']) . '">' . htmlspecialchars($row['artist']) . ' - ' . htmlspecialchars($row['title']) . '</a>';
-                            } else {
-                                echo '<a href="' . htmlspecialchars($row['link']) . '">' . htmlspecialchars($row['title']) . '</a>';
-                            }
-                            // Audio element with play button
-                            echo '<audio id="audio-' . htmlspecialchars($row['title']) . '" src="' . htmlspecialchars($row['file_path']) . '" type="audio/mpeg"></audio>';
-                            echo '<span class="play-button" onclick="togglePlay(\'audio-' . htmlspecialchars($row['title']) . '\')">▶</span>';
-                            echo '</li>';
-                        }
-                    }
-                    ?>
-                </ul>
-            </div>
+        <?php
+            // Function to slugify text for HTML id attributes
+            function slugify($text) {
+                $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+                $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+                $text = preg_replace('~[^-\w]+~', '', $text);
+                $text = trim($text, '-');
+                $text = preg_replace('~-+~', '-', $text);
+                $text = strtolower($text);
+                return $text;
+            }
 
-            <div class="playlist">
-                <h1>Pop Songs</h1>
-                <ul>
-                    <?php
-                    foreach ($songs as $row) {
-                        // Check if 'Pop' is part of the genre column (case-insensitive)
-                        if (stripos(trim($row['genre']), 'Pop') !== false) {
-                            echo '<li>';
-                            echo '<img src="' . htmlspecialchars($row['album_cover']) . '" alt="' . htmlspecialchars($row['album']) . '">';
-                            if (!empty($row['artist'])) {
-                                echo '<a href="' . htmlspecialchars($row['link']) . '">' . htmlspecialchars($row['artist']) . ' - ' . htmlspecialchars($row['title']) . '</a>';
-                            } else {
-                                echo '<a href="' . htmlspecialchars($row['link']) . '">' . htmlspecialchars($row['title']) . '</a>';
-                            }
-                            // Audio element with play button
-                            echo '<audio id="audio-' . htmlspecialchars($row['title']) . '" src="' . htmlspecialchars($row['file_path']) . '" type="audio/mpeg"></audio>';
-                            echo '<span class="play-button" onclick="togglePlay(\'audio-' . htmlspecialchars($row['title']) . '\')">▶</span>';
-                            echo '</li>';
-                        }
+            // Extract unique genres
+            $genres = [];
+            foreach ($songs as $row) {
+                $songGenres = explode(',', $row['genre']);
+                foreach ($songGenres as $genre) {
+                    $genre = trim($genre);
+                    if (!in_array($genre, $genres)) {
+                        $genres[] = $genre;
                     }
-                    ?>
-                </ul>
-            </div>
+                }
+            }
+            ?>
 
-            <div class="playlist">
-                <h1>Rock Songs</h1>
-                <ul>
-                    <?php
-                    foreach ($songs as $row) {
-                        // Check if 'Pop' is part of the genre column (case-insensitive)
-                        if (stripos(trim($row['genre']), 'Rock') !== false) {
-                            echo '<li>';
-                            echo '<img src="' . htmlspecialchars($row['album_cover']) . '" alt="' . htmlspecialchars($row['album']) . '">';
-                            if (!empty($row['artist'])) {
-                                echo '<a href="' . htmlspecialchars($row['link']) . '">' . htmlspecialchars($row['artist']) . ' - ' . htmlspecialchars($row['title']) . '</a>';
-                            } else {
-                                echo '<a href="' . htmlspecialchars($row['link']) . '">' . htmlspecialchars($row['title']) . '</a>';
-                            }
-                            // Audio element with play button
-                            echo '<audio id="audio-' . htmlspecialchars($row['title']) . '" src="' . htmlspecialchars($row['file_path']) . '" type="audio/mpeg"></audio>';
-                            echo '<span class="play-button" onclick="togglePlay(\'audio-' . htmlspecialchars($row['title']) . '\')">▶</span>';
-                            echo '</li>';
-                        }
-                    }
-                    ?>
-                </ul>
-
+            <section id="made_playlists">
                 <?php
-                $file_path = '../songs/IDontWantToMissAThing.mp3';
+                foreach ($genres as $genre) {
+                    $playlistId = slugify($genre); // Create a unique ID for each playlist
+                    echo '<div class="playlist" data-genre="' . htmlspecialchars($genre) . '">';
+                    echo '<h1>' . htmlspecialchars($genre) . ' Songs';
+                    echo ' <button class="play-all" onclick="playPlaylist(this)">Play All</button></h1>';
+                    echo '<ul id="' . $playlistId . '">';
 
-                if (file_exists($file_path)) {
-                    echo "File exists: " . realpath($file_path);
-                } else {
-                    echo "File does not exist: " . $file_path;
+                    foreach ($songs as $row) {
+                        if (stripos(trim($row['genre']), $genre) !== false) {
+                            $audioId = slugify($row['title']);
+                            echo '<li data-title="' . htmlspecialchars($row['title']) . '">';
+                            echo '<img src="' . htmlspecialchars($row['album_cover']) . '" alt="' . htmlspecialchars($row['album']) . '">';
+                            if (!empty($row['artist'])) {
+                                echo '<a href="javascript:void(0)" onclick="playSingleSong(\'audio-' . $audioId . '\', \'' . $playlistId . '\')">'
+                                    . htmlspecialchars($row['artist']) . ' - ' . htmlspecialchars($row['title']) . '</a>';
+                            } else {
+                                echo '<a href="javascript:void(0)" onclick="playSingleSong(\'audio-' . $audioId . '\', \'' . $playlistId . '\')">'
+                                    . htmlspecialchars($row['title']) . '</a>';
+                            }
+                            echo '<audio id="audio-' . $audioId . '" src="' . htmlspecialchars($row['file_path']) . '" type="audio/mpeg"></audio>';
+                            echo '<span class="play-button" onclick="togglePlay(\'audio-' . $audioId . '\')">▶</span>';
+                            echo '</li>';
+                        }
+                    }
+
+                    echo '</ul>';
+                    echo '</div>';
                 }
                 ?>
+            </section>
 
-            </div>
-        </section>
+
     </main>
-    
+
+    <div id="floating-controls">
+        <button id="prev-button">⏮ Previous</button>
+        <button id="play-pause-button">⏯ Play</button>
+        <button id="next-button">⏭ Next</button>
+        <div id="now-playing">
+            <span id="current-song-title">No song playing</span>
+        </div>
+    </div>
 </body>
 </html>
+
