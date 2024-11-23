@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 1.5em;
+    background-image: linear-gradient(45deg, red, blue);
+    color: white;
+    line-height: 4rem;
+    text-align: center;
+}
+
+header {
+    margin: 2rem auto;
+    padding: 4rem 0.5rem;
+    width: 60%;
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 10px 10px 16px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+a {
+    color: white;
+    margin-top: 1rem;
+    font-size: smaller;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: lightblue;
+    background-color: black;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+    border-radius: 10px;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+main {
+    margin: 2rem auto;
+}
+
+section {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+}
+
+#songList, #songLyrics {
+    background-image: linear-gradient(to bottom right, rgba(4, 39, 52, 0.5), rgba(21, 132, 176, 0.8));
+    background-color: rgb(14, 66, 86, 0.6); /* Fallback for older browsers */
+    border-radius: 10px;
+    width: 90%;
+    height: 800px;
+}
+
+#songList {
+    overflow-y: auto; /* Adds vertical scrollbar if content overflows */
+    padding-right: 10px; /* To avoid the scrollbar overlapping with content */
+}
+
+#songList ul li {
+    list-style: none;
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#songList ul li img {
+    margin-right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#songLyrics {
+    overflow-y: auto; /* Adds vertical scrollbar if content overflows */
+    padding-right: 10px; /* To avoid the scrollbar overlapping with content */
+}
+
+#songLyrics h3 {
+    margin: 2rem;
+}
+
+#songLyrics #lyricsContent {
+    margin: 0 auto;
+    padding: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 1100px) {
+    header {
+        font-size: 1.5rem;
+        padding: 2rem 0.5rem;
+        width: 80%;
+    }
+
+    section {
+        flex-direction: column; /* Stack divs vertically */
+        gap: 1rem;
+    }
+
+    #songList, #songLyrics {
+        width: 95%; /* Adjust width */
+        height: 600px; /* Reduce height */
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 1.2em;
+    }
+
+    header {
+        font-size: 1.2rem;
+        width: 90%;
+    }
+
+    section {
+        gap: 1rem;
+    }
+
+    #songList ul li img {
+        width: 3rem;
+        height: 3rem; /* Reduce image size */
+    }
+
+    #songList, #songLyrics {
+        width: 100%; /* Full width */
+        height: 500px; /* Further reduce height */
+    }
+}
+
+@media (max-width: 500px) {
+    body {
+        font-size: 1em;
+        line-height: 2rem; /* Adjust line height */
+    }
+
+    header {
+        font-size: 1rem;
+        flex-direction: column; /* Stack header items */
+        padding: 1rem;
+    }
+
+    section {
+        gap: 0.5rem;
+    }
+
+    #songList ul li img {
+        width: 2.5rem;
+        height: 2.5rem; /* Further reduce image size */
+    }
+
+    #songList, #songLyrics {
+        width: 100%; /* Full width */
+        height: 400px; /* Minimum height */
+    }
+
+    #songLyrics h3 {
+        font-size: 1rem;
+    }
+}

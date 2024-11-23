@@ -22,32 +22,33 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url("Resources/Images/headerBanner.webp");
-}
+    text-align: center;
 
-header a{
-    color: white;
-    text-decoration: none;
-    margin-right: 2rem;
-}
+    a{
+        color: white;
+        text-decoration: none;
+        margin-right: 2rem;
+    }
 
-header nav {
-    display: flex;
-    padding: 2rem 0;
-    display: flex;
-}
+    nav {
+        display: flex;
+        padding: 2rem 0;
+        display: flex;
+    }
 
-header ul {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    list-style: none;
+    ul {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+    }
 }
 
 #banner {
     padding: 2rem;
     text-align: center;
     line-height: 5rem;
+    background-color: rgb(9, 48, 61, 0.7);
 }
 
 h1 {
@@ -59,7 +60,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto;
+    margin: 2rem auto;
     text-align: center;
     width: 90%;
 
@@ -113,6 +114,107 @@ h1 {
                 }
             }
         }
+    }
+}
+
+/* Media Queries for Responsiveness */
+@media only screen and (max-width: 1200px) {
+    body {
+        font-size: 1.5em;
+    }
+
+    #popular-songs {
+        width: 80%;
+    }
+
+    .song-card {
+        width: 30%;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    body {
+        font-size: 1.2em;
+    }
+
+    header {
+        padding: 2rem 1rem;
+    }
+
+    #popular-songs {
+        width: 95%;
+    }
+
+    .song-card {
+        width: 45%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 1em;
+        padding: 0;
+        margin: 0;
+    }
+
+    header {
+        padding: 1rem;
+
+        h1 {
+            font-size: 3em;
+        }
+
+        nav {
+            width: 90%;
+
+        }
+
+        ul {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            line-height: 3rem;
+            width: 100%;
+            align-items: start;
+            justify-content: center;
+        }
+    }
+
+    main {
+        line-height: 2rem;
+        div {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin: 1rem 0;
+        }
+    }
+
+    #popular-songs {
+        width: 100%;
+        height: 500px;
+        overflow-y: auto; /* Adds vertical scrollbar if content overflows */
+        padding-right: 10px; /* To avoid the scrollbar overlapping with content */
+    }
+
+    .song-card {
+        width: 80% !important; /* Ensure this is applied */
+        margin: 1rem 0;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    #banner {
+        padding: 1rem;
     }
 }
 

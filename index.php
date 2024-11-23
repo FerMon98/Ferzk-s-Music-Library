@@ -31,17 +31,16 @@ $result = $conn->query($sql);
                 <li><a href="index.html">Home</a></li>
                 <li><a href="./Webpages/musicplayer.php">Playlists</a></li>
                 <li><a href="./Webpages/formadd-remove.php">Song Requests</a></li>
-                <li><a href="./Webpages/contact.html">Contact</a></li>
-                <li><a href="./Webpages/userchat.html">Forum</a></li>
-                <li><a href="./Webpages/lyricsweb.html">Lyrics</a></li>
-                <li><a href="./Webpages/donations.html">Donate</a></li>
+                <li><a href="./Webpages/contact.php">Contact</a></li>
+                <li><a href="./Webpages/lyricsWeb.php">Lyrics</a></li>
+                <li><a href="./Webpages/forum.php">Forum</a></li>
             </ul>
         </nav>
     </header>
     
     <main>
         <section id="banner">
-             <p style="padding: 2rem 4rem;">This is a simple website for a music library. <br> You can find all the music you love here. Just click on the song you want to listen to and enjoy the ride</p>  
+             <p style="padding: 2rem 4rem;">This is a simple website for a music library. <br> You can find all the music you love here, just <a href="php_setup_files/login.php" style="color: white">create an account</a> with us and enjoy all your favourites! <br> Here's a list of all of our popular songs: </p>  
         </section>
 
         <section>
@@ -72,7 +71,7 @@ $result = $conn->query($sql);
                                     }
                             
                                     echo '<p><strong>Genre:</strong> ' . htmlspecialchars($row['genre']) . '</p>';
-                                    echo '<a href="' . htmlspecialchars($row['link']) . '" target="_blank">Listen in Youtube</a>';
+                                    echo '<a href="' . htmlspecialchars($row['link']) . '" target="_blank">Listen on Youtube</a>';
                                 echo '</div>';
                             }
                         } else {

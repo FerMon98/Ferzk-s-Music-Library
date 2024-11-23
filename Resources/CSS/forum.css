@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+} 
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    background-image: linear-gradient(45deg, red, blue);
+}
+header {
+    background: #00000092;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+
+    div {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+section {
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 900px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+h1, h2 {
+    margin: 0;
+    color: #333;
+}
+.post, .comment {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.comment {
+    margin-left: 2rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+input, textarea, button {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    background: #333;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button:hover {
+    background: #555;
+}
+.coming-next {
+    background: linear-gradient(45deg, #0066cc, #33ccff);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
