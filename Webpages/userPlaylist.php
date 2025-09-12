@@ -77,7 +77,7 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
         let currentSongIndex = 0;
         let currentSong = null;
         let isPlaying = false;
-
+        
         // Update song information
         function updateSongDetails(songIndex) {
             const song = songs[songIndex];
@@ -86,6 +86,7 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
             const songTitle = document.getElementById('songTitle');
             const songArtistAlbum = document.getElementById('songArtistAlbum');
             const noSongMessage = document.getElementById('noSongMessage');
+            const toWebRoot = (p) => /^https?:\/\//i.test(p) ? p : '/' + p.replace(/^\/+/,'');
             
             if (song) {
                 // Hide the "Choose a song" message
@@ -98,8 +99,8 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
                 audioPlayer.style.display = 'block';
 
                 // Update the song details
-                audioPlayer.src = song.file_path;
-                songCover.src = song.album_cover || 'cover.jpg';
+                audioPlayer.src = toWebRoot(song.file_path);
+                songCover.src = toWebRoot(song.album_cover || 'cover-default.jpg');
                 songTitle.textContent = song.title;
                 songArtistAlbum.textContent = `${song.artist || 'Unknown Artist'} - ${song.album || 'Unknown Album'}`;
 
@@ -181,14 +182,12 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
                 console.error('Error:', error);
             });
         }
-
     </script>
 </head>
 <body>
     <header>
-        <a href="../index.php">🏡 </a>
+        <?php include __DIR__ . '/../components/navbar.php'; ?>
         <h1>Welcome, <?= htmlspecialchars($_SESSION['username'] ?? 'User') ?>!</h1>
-        <a href="../php_setup_files/logOut.php" style="padding: 2rem; font-size: 2rem">Logout</a>
     </header>
 
     <main>
@@ -202,8 +201,8 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
                             <li>
                                 <div class="song" style="width: 100%">
                                     <div>
-                                        <img src="<?= htmlspecialchars($song['album_cover'] ?? 'cover.jpg') ?>" alt="Album Cover">
-                                        <a href="javascript:void(0)" onclick="updateSongDetails(<?= $index ?>)">
+                                        <img src="<?= htmlspecialchars($song['album_cover'] ?? '../Resources/Images/placeholder/cover-default.jpg') ?>" alt="Album Cover">
+                                        <a href="javascript:void(0)" onclick="updateSongDetails(<?= $index ?>, true)">
                                             <?= htmlspecialchars($song['artist'] ?? 'Unknown Artist') ?> - <?= htmlspecialchars($song['title']) ?>
                                         </a>
                                     </div>
@@ -221,7 +220,7 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
                 <h2 id="nowPlayingTitle">Currently playing: </h2>
                 <div id="songCard">
                     <p id="noSongMessage">Choose a song to listen to</p>
-                    <img id="songCover" src="cover.jpg" alt="Song Cover" style="display:none;">
+                    <img id="songCover" src="<?= htmlspecialchars($song['album_cover'] ?? '../Resources/Images/placeholder/cover-default.jpg') ?>" alt="Song Cover" style="display:none;">
                     <h3 id="songTitle" style="display:none;">Song Title</h3>
                     <p id="songArtistAlbum" style="display:none;">Artist - Album</p>
                     <audio id="audioPlayer" controls style="display:none;">
@@ -237,5 +236,6 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
             </div>
         </section>
     </main>
+    <?php include __DIR__ . '/../components/footer.php'; ?>
 </body>
 </html>
