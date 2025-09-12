@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Full-height page + sticky footer */
+html { height: 100%; }
+
+/* ===== ORIGINAL BASE ===== */
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +11,12 @@
 }
 
 body {
+    /* make the page at least as tall as the viewport */
+    min-height: 100vh;    /* fallback */
+    min-height: 100dvh;   /* modern dynamic viewport */
+    min-height: 100svh;   /* iOS Safari safe value */
+    display: flex;
+    flex-direction: column;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -14,6 +24,9 @@ body {
     background-image: linear-gradient(45deg, red, blue);
     color: white;
 }
+
+/* let main expand to fill the gap between header and footer */
+main { flex: 1 0 auto; }
 
 header {
     padding: 3rem 1rem;
@@ -23,19 +36,17 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-
+    /* (The nested CSS below is not standard; see overrides at the end) */
     a{
         color: white;
         text-decoration: none;
         margin-right: 2rem;
     }
-
     nav {
         display: flex;
         padding: 2rem 0;
         display: flex;
     }
-
     ul {
         display: flex;
         justify-content: space-between;
@@ -62,14 +73,12 @@ h1 {
     align-items: center;
     margin: 2rem auto;
     text-align: center;
-    width: 90%;
-
+    width: min(1400px, 96%);
     div {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
         gap: 0.5rem;
-
         .song-card {
             display: flex;
             flex-direction: column;
@@ -80,14 +89,12 @@ h1 {
             border-radius: 20px;
             border: 2px solid white;
             width: 25%;
-
             p {
                 font-size: 1rem;
                 width: 100%;
                 text-align: start;
                 line-height: 1.5rem;
             }
-    
             img {
                 width: 40%;
                 height: auto;
@@ -95,13 +102,11 @@ h1 {
                 border-radius: 15%;
                 border: 1px solid white;
             }
-
             a{
                 color: skyblue;
                 text-decoration: none;
                 margin-top: 1rem;
                 font-size: smaller;
-
                 &:hover {
                     text-decoration: underline;
                     color: lightblue;
@@ -118,65 +123,39 @@ h1 {
 }
 
 /* Media Queries for Responsiveness */
+/* >=1600px: go to 5 columns if there’s room */
+@media (min-width: 1600px){
+  #popular-songs{
+    width: min(1600px, 95%);
+  }
+  #popular-songs > div{
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
 @media only screen and (max-width: 1200px) {
-    body {
-        font-size: 1.5em;
+    body { font-size: 1.5em; }
+    #popular-songs > div{
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     }
-
-    #popular-songs {
-        width: 80%;
-    }
-
-    .song-card {
-        width: 30%;
-    }
-
-    h1 {
-        font-size: 2.5em;
-    }
+    .song-card { width: 30%; }
+    h1 { font-size: 2.5em; }
 }
 
 @media only screen and (max-width: 900px) {
-    body {
-        font-size: 1.2em;
-    }
-
-    header {
-        padding: 2rem 1rem;
-    }
-
-    #popular-songs {
-        width: 95%;
-    }
-
-    .song-card {
-        width: 45%;
-    }
-
-    h1 {
-        font-size: 2em;
-    }
+    body { font-size: 1.2em; }
+    header { padding: 2rem 1rem; }
+    #popular-songs { width: 95%; }
+    .song-card { width: 45%; }
+    h1 { font-size: 2em; }
 }
 
 @media only screen and (max-width: 600px) {
-    body {
-        font-size: 1em;
-        padding: 0;
-        margin: 0;
-    }
-
+    body { font-size: 1em; padding: 0; margin: 0; }
     header {
         padding: 1rem;
-
-        h1 {
-            font-size: 3em;
-        }
-
-        nav {
-            width: 90%;
-
-        }
-
+        h1 { font-size: 3em; }
+        nav { width: 90%; }
         ul {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -186,7 +165,6 @@ h1 {
             justify-content: center;
         }
     }
-
     main {
         line-height: 2rem;
         div {
@@ -196,25 +174,90 @@ h1 {
             margin: 1rem 0;
         }
     }
-
     #popular-songs {
         width: 100%;
         height: 500px;
-        overflow-y: auto; /* Adds vertical scrollbar if content overflows */
-        padding-right: 10px; /* To avoid the scrollbar overlapping with content */
+        overflow-y: auto;
+        padding-right: 10px;
     }
-
     .song-card {
-        width: 80% !important; /* Ensure this is applied */
+        width: 80% !important;
         margin: 1rem 0;
     }
-
-    h1 {
-        font-size: 1.5em;
-    }
-
-    #banner {
-        padding: 1rem;
-    }
+    h1 { font-size: 1.5em; }
+    #banner { padding: 1rem; }
 }
 
+/* ===== POLISH & FIXES (OVERRIDES) — keep color vibe, reduce clutter ===== */
+
+/* Smaller baseline & nicer rhythm but preserve your gradient */
+body{
+  font-size: clamp(1rem, 1vw + .75rem, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Real (non-nested) selectors for header/nav so bullets disappear everywhere */
+header nav { display:flex; justify-content:center; }
+header ul { list-style:none; display:flex; flex-wrap:wrap; gap:1rem; padding:0; margin:.75rem 0; }
+header a { color:white; text-decoration:none; }
+header a:hover { text-decoration:underline; }
+
+/* Banner less tall */
+#banner{ line-height: 1.8rem; }
+
+/* Responsive grid for song cards (replaces the flex wrap) */
+#popular-songs > div{
+  display:grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+/* Card look—still your maroon tone, just cleaner proportions */
+#popular-songs .song-card{
+  width: auto !important;
+  background-color: rgba(89, 32, 32, 0.65) !important;
+  border: 2px solid rgba(255,255,255,0.35) !important;
+  border-radius: 16px !important;
+  padding: 1rem !important;
+  text-align: left;
+}
+
+/* Make covers fill the card width and stay square */
+#popular-songs .song-card img{
+  width: 100% !important;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+}
+
+/* Nicer type scale inside cards */
+#popular-songs .song-card h5{ font-size: 1.05rem; margin:.4rem 0 .2rem; }
+#popular-songs .song-card p{ font-size:.95rem; margin:.15rem 0; opacity:.95; }
+
+/* Reusable buttons (used by Add to Playlist and YouTube link) */
+.btn{
+  display:inline-block; padding:.5rem .8rem; border-radius:999px;
+  border:1px solid rgba(255,255,255,.25); color:white; text-decoration:none; cursor:pointer;
+  transition:transform .06s ease, background .2s ease;
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn.add{ background:#9D4BFF; border-color:transparent; font-weight:600; }
+.btn.add:hover{ background:#8a3ae6; }
+.btn.ghost{ background:transparent; }
+
+/* Shared navbar/footer components */
+.site-header{ padding: 1rem 1rem .5rem; }
+.site-header .main-nav ul{ list-style:none; display:flex; flex-wrap:wrap; gap:1rem; padding:0; margin:.75rem 0; }
+.site-header .main-nav a{ color:white; text-decoration:none; }
+.site-header .main-nav a:hover{ text-decoration:underline; }
+
+.site-footer{ flex-shrink: 0; margin-top: clamp(16px, 2vw, 24px); padding:1.2rem 1rem; background: rgba(0,0,0,.35); border-top:1px solid rgba(255,255,255,.15); }
+.site-footer .footer-inner{ max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+.site-footer .footer-nav a{ color:white; text-decoration:none; margin-right:1rem; }
+.site-footer .footer-nav a:hover{ text-decoration:underline; }
+
+/* Small tweak on very small screens */
+@media (max-width: 600px){
+  #banner{ padding: 1rem; }
+}
