@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <header>
-        <a href="../index.php">🏡</a>
+        <?php include __DIR__ . '/../components/navbar.php'; ?>
         <h3>Do you want to collaborate with us or have any questions?</h3>
     </header>
 
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h4>If you want you can also give us a call and one of our specialists will help you out.</h4>
             <p><strong>Phone:</strong> +34 649 71 12 33</p>
             <p><strong>Email:</strong> fernanda.r.montalvan@gmail.com</p>
-            <p><strong>Address:</strong> Can Masallera, Sant Boi de Llobregat, Catalunya.</p>
+            <p><strong>Address:</strong> Sant Boi de Llobregat, Catalunya.</p>
         </section>
     </footer>
 </body>

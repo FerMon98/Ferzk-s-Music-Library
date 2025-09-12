@@ -2,7 +2,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Include the database connection
 include '../php_setup_files/connection.php';
+
+// Include helper functions
+include '../php_setup_files/helpers.php';
 
 // Fetch all songs from the database
 $sql = "SELECT song_id, title, artist, album, album_cover, genre, duration, lyrics, link, file_path FROM songs";
@@ -26,7 +30,8 @@ foreach ($songs as $row) {
 }
 
 // Function to slugify text for HTML id attributes
-function slugify($text) {
+function slugify($text)
+{
     // Add a prefix to ensure the ID starts with a letter
     $text = 'playlist-' . $text;
     $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -39,9 +44,6 @@ function slugify($text) {
 }
 
 session_start();  // Start the session
-
-// Include the database connection
-include '../php_setup_files/connection.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -79,10 +81,18 @@ if (isset($_POST['addToPlaylist']) && isset($_POST['song_id'])) {
     exit();  // End the script after handling the AJAX request
 }
 
+function webroot_src($p)
+{
+    if (!$p) return '';
+    if (preg_match('#^https?://#i', $p)) return $p; // external
+    return '/' . ltrim($p, '/');                     // -> /songs/filename.mp3
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,9 +109,11 @@ if (isset($_POST['addToPlaylist']) && isset($_POST['song_id'])) {
         console.log("Songs array from PHP:", songs);
     </script>
 </head>
+
 <body>
     <header>
-        <a href="../index.php">🏡</a>
+        <?php include __DIR__ . '/../components/navbar.php'; ?>
+
         <h1>Have a blast with your favorite songs!</h1>
     </header>
 
@@ -110,33 +122,35 @@ if (isset($_POST['addToPlaylist']) && isset($_POST['song_id'])) {
 
         <section id="made_playlists">
             <?php foreach ($genres as $genre): ?>
-                <?php 
-                    $playlistId = slugify($genre); 
+                <?php
+                $playlistId = slugify($genre);
                 ?>
                 <div class="playlist" data-genre="<?= htmlspecialchars($genre) ?>">
-                    <h1><?= htmlspecialchars($genre) ?> Songs
+                    <p><?= htmlspecialchars($genre) ?> Songs
                         <button class="play-all" onclick="playPlaylist('<?= $playlistId ?>')">Play All</button>
-                    </h1>
+                    </p>
                     <ul id="<?= $playlistId ?>">
                         <?php foreach ($songs as $row): ?>
                             <?php if (stripos(trim($row['genre']), $genre) !== false): ?>
-                                <?php 
-                                    $audioId = slugify($row['title']); 
+                                <?php
+                                $audioId = slugify($row['title']);
                                 ?>
                                 <li data-title="<?= htmlspecialchars($row['title']) ?>">
                                     <div>
-                                        <img src="<?= htmlspecialchars($row['album_cover']) ?>" alt="<?= htmlspecialchars($row['album']) ?>">
-                                        <a href="javascript:void(0)" 
-                                        onclick="playSingleSong('audio-<?= $audioId ?>', '<?= $playlistId ?>')">
-                                            <?= !empty($row['artist']) 
-                                                ? htmlspecialchars($row['artist']) . ' - ' . htmlspecialchars($row['title']) 
+                                        <?php $cover = htmlspecialchars(cover_from_row($row)); ?>
+                                        <img src="<?= $cover ?>" alt="<?= htmlspecialchars($row['album'] ?? 'Album') ?>">
+
+                                        <a href="javascript:void(0)"
+                                            onclick="playSingleSong('audio-<?= $audioId ?>', '<?= $playlistId ?>')">
+                                            <?= !empty($row['artist'])
+                                                ? htmlspecialchars($row['artist']) . ' - ' . htmlspecialchars($row['title'])
                                                 : htmlspecialchars($row['title']) ?>
                                         </a>
                                     </div>
                                     <div>
                                         <button class="add-to-playlist" onclick="addToPlaylist(<?= $row['song_id'] ?>)" style="padding: 0.3rem; border-radius: 15px; background-color:black; color: white ">+</button>
-                                        <audio id="audio-<?= $audioId ?>" src="<?= htmlspecialchars($row['file_path']) ?>" type="audio/mpeg"></audio>
-                                        <span class="play-button" onclick="togglePlay('audio-<?= $audioId ?>')">😎</span>
+                                        <audio id="audio-<?= $audioId ?>" src="<?= htmlspecialchars(webroot_src($row['file_path'])) ?>" type="audio/mpeg"></audio>
+                                        <span class="play-button" onclick="playSingleSong('audio-<?= $audioId ?>', '<?= $playlistId ?>')">😎</span>
                                     </div>
                                 </li>
                             <?php endif; ?>
@@ -155,5 +169,9 @@ if (isset($_POST['addToPlaylist']) && isset($_POST['song_id'])) {
             <span id="current-song-title">No song playing</span>
         </div>
     </div>
+
+    <?php include __DIR__ . '/../components/footer.php'; ?>
+
 </body>
+
 </html>

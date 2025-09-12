@@ -26,23 +26,22 @@ $posts = mysqli_query($conn, "SELECT * FROM forum_posts ORDER BY created_at DESC
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Fernanda">
-    <meta name="description" content="Ferzk's Music Library - Lyrics">
-    <meta name="keywords" content="music, lyrics, Ferzk, song lyrics">
-    <title>Forum</title>
-    <link rel="shortcut icon" href="../Resources/Images/favicon/icons8-music.svg" type="image/x-icon">
-    <link rel="stylesheet" href="../Resources/CSS/forum.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Fernanda">
+        <meta name="description" content="Ferzk's Music Library - Lyrics">
+        <meta name="keywords" content="music, lyrics, Ferzk, song lyrics">
+        <meta charset="UTF-8">
+        <title>Forum</title>
+        <link rel="shortcut icon" href="../Resources/Images/favicon/icons8-music.svg" type="image/x-icon">
+        <link rel="stylesheet" href="../Resources/CSS/forum.css">
 </head>
+
 <body>
     <header>
-        <div>
-            <a href="../index.php">🏡</a>
-            <h1 style="color: white;">Forum</h1><br>
-        </div>
-        <p>Discuss your favorite songs and updates!</p>
+        <?php include __DIR__ . '/../components/navbar.php'; ?>
     </header>
 
     <section class="coming-next">
@@ -52,7 +51,7 @@ $posts = mysqli_query($conn, "SELECT * FROM forum_posts ORDER BY created_at DESC
         <p>🎧 Personalized recommendations</p>
     </section>
 
-    <section>    
+    <section>
         <h2>Start a Discussion</h2>
         <form method="POST">
             <input type="text" name="username" placeholder="Your Name" required>
@@ -96,5 +95,8 @@ $posts = mysqli_query($conn, "SELECT * FROM forum_posts ORDER BY created_at DESC
         <?php endwhile; ?>
     </section>
 
+    <?php include __DIR__ . '/../components/footer.php'; ?>
+
 </body>
+
 </html>
