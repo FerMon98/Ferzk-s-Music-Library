@@ -138,7 +138,6 @@ $preselect_id = isset($_GET['song_id']) ? (int)$_GET['song_id'] : 0;
 
 <body>
     <header>
-        <h1>Song Lyrics</h1>
         <?php include __DIR__ . '/../components/navbar.php'; ?>
     </header>
 

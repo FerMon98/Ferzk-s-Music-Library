@@ -95,6 +95,7 @@ $posts = mysqli_query($conn, "SELECT * FROM forum_posts ORDER BY created_at DESC
         <?php endwhile; ?>
     </section>
 
+    <button id="toTop" type="button" aria-label="Scroll to top" title="Back to top">↑</button>    
     <?php include __DIR__ . '/../components/footer.php'; ?>
 
 </body>

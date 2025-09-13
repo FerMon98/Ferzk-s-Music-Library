@@ -170,6 +170,7 @@ function webroot_src($p)
         </div>
     </div>
 
+    <button id="toTop" type="button" aria-label="Scroll to top" title="Back to top">↑</button>    
     <?php include __DIR__ . '/../components/footer.php'; ?>
 
 </body>

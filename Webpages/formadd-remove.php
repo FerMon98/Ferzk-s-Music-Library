@@ -115,7 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <a href="../index.php">Go back to the library</a>
     </main>
-
+    
+    <button id="toTop" type="button" aria-label="Scroll to top" title="Back to top">↑</button>    
     <?php include __DIR__ . '/../components/footer.php'; ?>
 
 </body>

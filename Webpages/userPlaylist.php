@@ -236,6 +236,8 @@ if (isset($_POST['removeFromPlaylist']) && isset($_POST['song_id'])) {
             </div>
         </section>
     </main>
+    
+    <button id="toTop" type="button" aria-label="Scroll to top" title="Back to top">↑</button>    
     <?php include __DIR__ . '/../components/footer.php'; ?>
 </body>
 </html>
