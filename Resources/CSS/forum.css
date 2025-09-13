@@ -3,10 +3,11 @@
 section {
     padding: 1rem;
     margin: 1rem auto;
-    max-width: 900px;
+    width: min(900px, 96%);
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    color: black
 }
 h1, h2 {
     margin: 0;

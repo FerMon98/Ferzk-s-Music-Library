@@ -13,6 +13,7 @@ body{
 header{
   padding: 2rem 1rem;
   display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
   gap:1rem;
