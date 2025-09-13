@@ -1,244 +1,190 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Full-height page + sticky footer */
+/* ===== Design tokens ===== */
+:root{
+  --site-gradient: linear-gradient(135deg, red 0%, blue 100%);
+}
+
+/* ===== Base / Reset ===== */
 html { height: 100%; }
 
-/* ===== ORIGINAL BASE ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;   
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body {
-    /* make the page at least as tall as the viewport */
-    min-height: 100vh;    /* fallback */
-    min-height: 100dvh;   /* modern dynamic viewport */
-    min-height: 100svh;   /* iOS Safari safe value */
-    display: flex;
-    flex-direction: column;
-    font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
-    font-size: 2em;
-    background-image: linear-gradient(45deg, red, blue);
-    color: white;
-}
-
-/* let main expand to fill the gap between header and footer */
-main { flex: 1 0 auto; }
-
-header {
-    padding: 3rem 1rem;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    /* (The nested CSS below is not standard; see overrides at the end) */
-    a{
-        color: white;
-        text-decoration: none;
-        margin-right: 2rem;
-    }
-    nav {
-        display: flex;
-        padding: 2rem 0;
-        display: flex;
-    }
-    ul {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        list-style: none;
-    }
-}
-
-#banner {
-    padding: 2rem;
-    text-align: center;
-    line-height: 5rem;
-    background-color: rgb(9, 48, 61, 0.7);
-}
-
-h1 {
-    -webkit-text-stroke: 3px rgb(58, 3, 58) ;
-    font-size: 3em;
-}
-
-#popular-songs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem auto;
-    text-align: center;
-    width: min(1400px, 96%);
-    div {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 0.5rem;
-        .song-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 1rem 0;
-            padding: 1rem;
-            background-color: rgba(89, 32, 32, 0.8);
-            border-radius: 20px;
-            border: 2px solid white;
-            width: 25%;
-            p {
-                font-size: 1rem;
-                width: 100%;
-                text-align: start;
-                line-height: 1.5rem;
-            }
-            img {
-                width: 40%;
-                height: auto;
-                object-fit: cover;
-                border-radius: 15%;
-                border: 1px solid white;
-            }
-            a{
-                color: skyblue;
-                text-decoration: none;
-                margin-top: 1rem;
-                font-size: smaller;
-                &:hover {
-                    text-decoration: underline;
-                    color: lightblue;
-                    background-color: black;
-                    cursor: pointer;
-                    transition: 0.3s ease-in;
-                    border-radius: 10px;
-                    padding: 0.5rem;
-                    font-size: 1.2rem;
-                }
-            }
-        }
-    }
-}
-
-/* Media Queries for Responsiveness */
-/* >=1600px: go to 5 columns if there’s room */
-@media (min-width: 1600px){
-  #popular-songs{
-    width: min(1600px, 95%);
-  }
-  #popular-songs > div{
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
-  }
-}
-
-@media only screen and (max-width: 1200px) {
-    body { font-size: 1.5em; }
-    #popular-songs > div{
-        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    }
-    .song-card { width: 30%; }
-    h1 { font-size: 2.5em; }
-}
-
-@media only screen and (max-width: 900px) {
-    body { font-size: 1.2em; }
-    header { padding: 2rem 1rem; }
-    #popular-songs { width: 95%; }
-    .song-card { width: 45%; }
-    h1 { font-size: 2em; }
-}
-
-@media only screen and (max-width: 600px) {
-    body { font-size: 1em; padding: 0; margin: 0; }
-    header {
-        padding: 1rem;
-        h1 { font-size: 3em; }
-        nav { width: 90%; }
-        ul {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            line-height: 3rem;
-            width: 100%;
-            align-items: start;
-            justify-content: center;
-        }
-    }
-    main {
-        line-height: 2rem;
-        div {
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            margin: 1rem 0;
-        }
-    }
-    #popular-songs {
-        width: 100%;
-        height: 500px;
-        overflow-y: auto;
-        padding-right: 10px;
-    }
-    .song-card {
-        width: 80% !important;
-        margin: 1rem 0;
-    }
-    h1 { font-size: 1.5em; }
-    #banner { padding: 1rem; }
-}
-
-/* ===== POLISH & FIXES (OVERRIDES) — keep color vibe, reduce clutter ===== */
-
-/* Smaller baseline & nicer rhythm but preserve your gradient */
 body{
+  min-height: 100svh; /* full-height layout */
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
   font-size: clamp(1rem, 1vw + .75rem, 1.125rem);
   line-height: 1.6;
+  color: white;
+
+  background: transparent;
+  position: relative;
 }
 
-/* Real (non-nested) selectors for header/nav so bullets disappear everywhere */
-header nav { display:flex; justify-content:center; }
-header ul { list-style:none; display:flex; flex-wrap:wrap; gap:1rem; padding:0; margin:.75rem 0; }
-header a { color:white; text-decoration:none; }
-header a:hover { text-decoration:underline; }
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--site-gradient) no-repeat;
+  background-size: cover;
+}
 
-/* Banner less tall */
-#banner{ line-height: 1.8rem; }
+main { flex: 1 0 auto; }
 
-/* Responsive grid for song cards (replaces the flex wrap) */
+/* ===== Header / Nav ===== */
+.site-header{
+    display:flex;
+    flex-direction: column; /* default: stacked vertically */
+    justify-content:center;
+    align-items:center;
+    padding:.8rem 1rem;
+    margin:1.5rem 0;
+    position:relative;
+    z-index:1000;
+}
+
+.main-nav ul{
+  list-style:none;
+  display:flex;
+  gap:1rem;
+  margin:0;
+  padding:0;
+}
+
+.site-header .main-nav a{
+  color:white;
+  text-decoration:none;
+}
+
+.site-header .main-nav a:hover{ text-decoration:underline; }
+
+.site-header .main-nav a.active{
+  color:#3BE0FF;
+  font-weight:700;
+  text-decoration:none;
+  border-bottom:2px solid currentColor;
+}
+
+/* Hamburger button (hidden by default, shown on mobile) */
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:white;
+  font-size:2rem;
+  cursor:pointer;
+}
+
+/* ===== Brand (logo + text) ===== */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+}
+
+.brand-link{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  color:white;
+  text-decoration:none;
+  font-size: 2rem;
+}
+
+.brand-link:hover{ text-decoration:underline; }
+
+.brand-logo{
+  width:65px;
+  height:60px;
+  border-radius:8px;
+}
+
+/* ===== Banner (card) ===== */
+#banner{
+  padding:1rem;
+  max-width:1100px;
+  margin:1rem auto;
+  text-align:center;
+  background:rgba(9,48,61,.35);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:16px;
+  backdrop-filter:blur(2px);
+  line-height:1.8rem;
+}
+
+/* ===== Headings ===== */
+h1{
+  -webkit-text-stroke:3px rgb(58, 3, 58);
+  font-size:3rem;
+}
+
+/* ===== Popular songs ===== */
+#popular-songs{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin:2rem auto;
+  text-align:center;
+  width:min(1400px, 96%);
+}
+
 #popular-songs > div{
-  display:grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  display:grid;
+  gap:1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* default grid */
 }
 
-/* Card look—still your maroon tone, just cleaner proportions */
+/* Card look */
 #popular-songs .song-card{
-  width: auto !important;
-  background-color: rgba(89, 32, 32, 0.65) !important;
-  border: 2px solid rgba(255,255,255,0.35) !important;
-  border-radius: 16px !important;
-  padding: 1rem !important;
-  text-align: left;
+  width:auto;
+  background-color: rgba(89, 32, 32, 0.65);
+  border: 2px solid rgba(255,255,255,0.35);
+  border-radius:16px;
+  padding:1rem;
+  text-align:left;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
 }
 
-/* Make covers fill the card width and stay square */
+#popular-songs .song-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0,0,0,.25);
+  border-color: rgba(255,255,255,0.55);
+}
+
 #popular-songs .song-card img{
-  width: 100% !important;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 12px !important;
-  border: 1px solid rgba(255,255,255,0.25) !important;
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.25);
+  transition: transform .25s ease;
 }
+#popular-songs .song-card:hover img{ transform: scale(1.02); }
 
-/* Nicer type scale inside cards */
-#popular-songs .song-card h5{ font-size: 1.05rem; margin:.4rem 0 .2rem; }
+#popular-songs .song-card h5{ font-size:1.05rem; margin:.4rem 0 .2rem; }
 #popular-songs .song-card p{ font-size:.95rem; margin:.15rem 0; opacity:.95; }
 
-/* Reusable buttons (used by Add to Playlist and YouTube link) */
+/* Reusable buttons */
 .btn{
-  display:inline-block; padding:.5rem .8rem; border-radius:999px;
-  border:1px solid rgba(255,255,255,.25); color:white; text-decoration:none; cursor:pointer;
+  display:inline-block;
+  padding:.5rem .8rem;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.25);
+  color:white;
+  text-decoration:none;
+  cursor:pointer;
   transition:transform .06s ease, background .2s ease;
 }
 .btn:hover{ transform: translateY(-1px); }
@@ -246,18 +192,137 @@ header a:hover { text-decoration:underline; }
 .btn.add:hover{ background:#8a3ae6; }
 .btn.ghost{ background:transparent; }
 
-/* Shared navbar/footer components */
-.site-header{ padding: 1rem 1rem .5rem; }
-.site-header .main-nav ul{ list-style:none; display:flex; flex-wrap:wrap; gap:1rem; padding:0; margin:.75rem 0; }
-.site-header .main-nav a{ color:white; text-decoration:none; }
-.site-header .main-nav a:hover{ text-decoration:underline; }
+/* ===== Footer ===== */
+.site-footer{
+  flex-shrink:0;
+  margin-top:clamp(16px, 2vw, 24px);
+  padding:1.2rem 1rem;
+  background: rgba(0,0,0,.35);
+  border-top:1px solid rgba(255,255,255,.15);
+  border-radius: 25px;
+}
+.site-footer .footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+}
+.site-footer .footer-nav a{
+  color:white;
+  text-decoration:none;
+  margin-right:1rem;
+}
+.site-footer .footer-nav a:hover{
+  color:#3BE0FF; font-weight:700; text-decoration:none; border-bottom:2px solid currentColor;
+}
 
-.site-footer{ flex-shrink: 0; margin-top: clamp(16px, 2vw, 24px); padding:1.2rem 1rem; background: rgba(0,0,0,.35); border-top:1px solid rgba(255,255,255,.15); }
-.site-footer .footer-inner{ max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:1rem; }
-.site-footer .footer-nav a{ color:white; text-decoration:none; margin-right:1rem; }
-.site-footer .footer-nav a:hover{ text-decoration:underline; }
+/* ===== Scroll-to-top ===== */
+/* Scroll-to-top */
+#toTop{
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(0,0,0,.75);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;                    /* always layout; toggle with opacity/visibility */
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(2px);
+  z-index: 1200;
 
-/* Small tweak on very small screens */
+  /* hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+#toTop.show{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+#toTop:hover{ transform: translateY(-2px); }
+
+
+/* ===== Media Queries ===== */
+
+/* Desktop tidy grid ≥1000px (4 cols) */
+@media (min-width: 1000px){
+  #popular-songs > div{
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Ultra-wide ≥1550px (5 cols + a slightly wider wrap) */
+@media (min-width: 1550px){
+  #popular-songs{ width:min(1550px, 95%); }
+  #popular-songs > div{
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Mobile nav & small screens (tablet + phone) <1050px */
+@media (max-width: 1050px){
+  /* Header switches to a single row with hamburger */
+  .site-header{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-toggle{ display:block; }
+
+  /* Dropdown menu */
+  .main-nav{
+    position:absolute;
+    top:100%;
+    right:0;
+    z-index:1100;
+    background: rgba(7,11,18,.95);
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+    border-radius:8px;
+    padding:1rem;
+    display:none;               /* hidden until .open */
+    flex-direction:column;
+    align-items:flex-start;
+    min-width:200px;
+  }
+
+  .main-nav ul{
+    flex-direction:column;
+    gap:.75rem;
+  }
+
+  .main-nav.open{ display:flex; }
+
+  .brand-link { font-size:1.5rem; }
+}
+
+/* Tablet & below ≤900px */
+@media (max-width: 900px){
+  .brand-logo{ width:35px; height:30px; }
+  #banner{ max-width: 90%; }
+  #popular-songs{ width:95%; }
+  h1{ font-size:2em; }
+
+  /* Active link styling inside dropdown looks cleaner without underline bar */
+  .site-header .main-nav a.active{
+    border-bottom:none;
+    background: rgba(61,167,255,.16);
+    padding:.25rem .5rem;
+    border-radius:6px;
+  }
+  .brand-link { font-size: 1rem; }
+}
+
+/* Narrow phones ≤600px */
 @media (max-width: 600px){
-  #banner{ padding: 1rem; }
+  #banner{ padding:1rem; }
+  h1{ font-size:1.5em; }
 }
