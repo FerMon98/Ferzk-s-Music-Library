@@ -31,6 +31,9 @@ A small full-stack PHP/MySQL music library where users can browse songs, play tr
   - Contact form (stored)
   - Song request form to propose new songs for the catalog
 
+## 🎥 Demo
+<video src="./FerzkMusicLibrary.mp4" controls width="600"></video>
+
 ## Tech Stack
 
 - **Backend**: PHP 8+, mysqli
