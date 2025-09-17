@@ -55,6 +55,8 @@ section{
   border: 1px solid rgba(255,255,255,.25);
 }
 
+.song-line a { color: #fff; text-decoration: none; font-weight: 600; }
+
 /* tiny edit pill */
 .song-line{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
 .tiny-edit{
