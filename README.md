@@ -32,7 +32,7 @@ A small full-stack PHP/MySQL music library where users can browse songs, play tr
   - Song request form to propose new songs for the catalog
 
 ## 🎥 Demo
-<video src="./FerzkMusicLibrary.mp4" controls width="600"></video>
+<video src="./FerzkMusicLibraryDemo.mp4" controls width="600"></video>
 
 ## Tech Stack
 
